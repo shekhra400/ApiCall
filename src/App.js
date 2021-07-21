@@ -1,37 +1,38 @@
-import Test from './components/Test'
+import Test from './containers/Test'
 import './App.css';
-import { useState } from 'react';
-import UserList from './components/UserList';
+//import { useState } from 'react';
+//import UserList from './components/UserList';
 
 function App() {
 
-  const [users, setUsers] = useState([]);
-  const loadUserList = async() => {    
+  //const [users, setUsers] = useState([]);
+  // const loadUserList = async() => {    
 
-    const response = await fetch('https://loadusers-default-rtdb.firebaseio.com/user.json');
-    const responseData = await response.json();
+  //   const response = await fetch('https://loadusers-default-rtdb.firebaseio.com/user.json');
+  //   const responseData = await response.json();
 
-    const loadedUsers = [];
+  //   const loadedUsers = [];
 
-    for ( const key in responseData){
+  //   for ( const key in responseData){
 
-      loadedUsers.push({
-        id: key,
-        name : responseData[key].name
-      })
-    }
+  //     loadedUsers.push({
+  //       id: key,
+  //       name : responseData[key].name
+  //     })
+  //   }
 
-        setUsers(loadedUsers);
-  }
+  //       setUsers(loadedUsers);
+  // }
 
   return (
     <div className="App">
       <header className="App-header">
-      <Test loadUsers ={loadUserList}/>
-      <UserList data={users}/>
+     <Test/>
       </header>
     </div>
   );
 }
 
+//  <Test loadUsers ={loadUserList}/>
+// <UserList data={users}/>
 export default App;

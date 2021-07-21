@@ -1,0 +1,16 @@
+Include axios and make api call from it
+combine reducers
+use utils for common functions
+import lodash and use (used for commonly used operations such as sorting,searching)
+seperate conponent and container
+use axios api call with success and error actions (dispatch(addUserSuccess(loadedUsers)) and dispatch(addUserError(loadedUsers))))
+write nothing in app.js
+
+
+For login
+create page layout with header and footer component
+creat link in the home page header which redirects to login page
+if user is logged in show logout button instead of login
+implement routing such as
+/user/login (unprotected)
+/user/account (protected route only for logged in user)

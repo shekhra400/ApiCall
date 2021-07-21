@@ -3,7 +3,7 @@ const UserList = (props) => {
     return (
        <ul>
            {
-                props.data.map((user) => (
+                props.list.map((user) => (
                     <li>{user.name}</li>
                 ))
            }
