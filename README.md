@@ -22,7 +22,7 @@ never call a container from a component
 ### For Register
     * Go through Redux form
     * how to use material ui form components with redux form
-    * understand redux-form validations and apply
+    * understand redux-form validations and apply validations on the fields
     * implement loader on submit click
     * use material ui alert messages for success and error messages.
 
