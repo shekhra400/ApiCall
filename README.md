@@ -15,9 +15,9 @@ never call a container from a component
 
 
 ### For login
-implement routing such as
-/user/login (unprotected)
-/user/account (protected route only for logged in user)
+    implement routing such as
+    /user/login (unprotected)
+    /user/account (protected route only for logged in user)
     
 ### For Register
     * Go through Redux form
