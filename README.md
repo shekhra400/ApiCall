@@ -11,15 +11,18 @@
     USER_LOGIN_SUCCESS(for success message),
     USER_LOGIN_ERROR (for error popups)
 
-merge login reducer and actions with user reducer and actions**
 never call a container from a component
 
 
-For login
-create page layout with header and footer component 
-creat link in the home page header which redirects to login page
-if user is logged in show logout button instead of login n
+### For login
 implement routing such as
 /user/login (unprotected)
 /user/account (protected route only for logged in user)
+    
+### For Register
+    * Go through Redux form
+    * how to use material ui form components with redux form
+    * understand redux-form validations
+    * implement loader on submit click
+    * use material ui alert messages for success and error messages.
 
