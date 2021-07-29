@@ -1,8 +1,11 @@
 //import Test from './containers/Test'
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import PrivateRoute from "./components/Common/Private/PrivateRoute";
+import PublicRoute from "./components/Common/Public/PublicRoute";
+import { useSelector, useDispatch } from "react-redux";
 import { Redirect, Route, Switch } from "react-router";
 import "./App.css";
+import { toggleLoginIn } from "./actions/userAction";
 //import { useState } from 'react';
 //import UserList from './components/UserList';
 import Header from "./components/Header/Header";
@@ -31,31 +34,33 @@ function App() {
 
   //       setUsers(loadedUsers);
   // }
-
+  const dispatch = useDispatch();
+  const authToken = localStorage.getItem("token");
+  useEffect(() => {
+    if (authToken !== null) dispatch(toggleLoginIn(true));
+    else dispatch(toggleLoginIn(false));
+  }, [authToken, dispatch]);
   const userIsLoggedIn = useSelector((state) => state.users.isLoggedIn);
-  //const authToken = localStorage.getItem("token");
 
   return (
     <React.Fragment>
       <Header />
       <section className="main-container">
         <Switch>
-          <Route path="/" exact>
-            <HomePage />
-          </Route>
-          <Route path="/contact" exact>
-            <ContactPage />
-          </Route>
-          {!userIsLoggedIn && (
-            <Route path="/login" exact>
-              <LoginPage />
-            </Route>
-          )}
-          {userIsLoggedIn && (
-            <Route path="/profile" exact>
-              <ProfilePage />
-            </Route>
-          )}
+          <PublicRoute exact path="/" component={HomePage} />
+          <PublicRoute exact path="/contact" component={ContactPage} />
+          <PrivateRoute
+            exact
+            path="/login"
+            component={LoginPage}
+            isAuthenticated={!userIsLoggedIn}
+          />
+          <PrivateRoute
+            exact
+            path="/profile"
+            component={ProfilePage}
+            isAuthenticated={userIsLoggedIn}
+          />
           <Route path="*">
             <Redirect to="/" />
           </Route>

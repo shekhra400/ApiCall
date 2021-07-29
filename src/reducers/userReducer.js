@@ -5,6 +5,7 @@ import {
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILURE,
   USER_LOGOUT_REQUEST,
+  USER_LOGIN_TOGGLE,
 } from "../actions/userAction";
 
 const initialState = {
@@ -35,6 +36,7 @@ const userReducer = (state = initialState, action) => {
       if (authToken.length > 0) {
         localStorage.setItem("token", authToken);
       }
+
       break;
     case USER_LOGIN_FAILURE:
       updatedState = {
@@ -56,6 +58,12 @@ const userReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         list: [...action.payload],
+      };
+      break;
+    case USER_LOGIN_TOGGLE:
+      updatedState = {
+        ...state,
+        isLoggedIn: action.payload,
       };
       break;
     case LOAD_ERROR:
