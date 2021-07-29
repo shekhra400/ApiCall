@@ -10,11 +10,6 @@
     USER_LOGIN_REQUEST(for loading),
     USER_LOGIN_SUCCESS(for success message),
     USER_LOGIN_ERROR (for error popups)
-each functionality must be in seperate component folders like 
-    components/contacts/contactPage.js , 
-    components/contacts/contactPage.module.css
-    components/Footer/footer.js
-    components/Footer/footer.module.css
 
 merge login reducer and actions with user reducer and actions**
 never call a container from a component
