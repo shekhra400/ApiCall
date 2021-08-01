@@ -27,5 +27,12 @@ never call a container from a component
     * use material ui alert messages for success and error messages.
     
 ### For User list Page
-    * Go through 
+    * Create a private route
+    * link in header for List Users for routing with private route as logged in user.
+    * create full Consumers module(container, component,action,reducer,selector file (new thing we can discuss in a call)
+    * on page load dispatch actions and then api call and the reducer.
+    * complete flow with redux api calls using params.
+    * once data is retrieved save in redux state with all the current information (new  entity in state)
+        consumers: { list :[] ,page:2}
+    * container me console.log(user list data).
 
