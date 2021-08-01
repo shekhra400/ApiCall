@@ -55,7 +55,7 @@ export const authenticateUser = (email, pwd) => {
   return async (dispatch) => {
     dispatch(authenticateUserRequest());
     axios
-      .post(`${API_BASE_PATH}login`, {
+      .post(`${API_BASE_PATH}login?delay=5`, {
         email: email,
         password: pwd,
       })

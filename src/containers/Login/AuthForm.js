@@ -5,6 +5,11 @@ import { authenticateUser } from "../../actions/userAction";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useHistory } from "react-router-dom";
 import { Alert } from "@material-ui/lab";
+import {
+  selectUserIsLoggedIn,
+  selectUserIsLoading,
+  selectUserIsError,
+} from "../../store/selector";
 
 const AuthForm = () => {
   //const error = useSelector((state) => state.login.error);
@@ -16,18 +21,20 @@ const AuthForm = () => {
   //const enteredEmailRef = useRef();
   //const enteredPasswordRef = useRef();
   const [isLogin, setIsLogin] = useState(true);
-  const {
-    error: isError,
-    isLoading,
-    isLoggedIn,
-  } = useSelector((state) => state.users);
+
+  const state = useSelector((state) => state);
+  // const {
+  //   error: isError,
+  //   isLoading,
+  //   isLoggedIn,
+  // } = useSelector((state) => state.users);
   //const  = useSelector((state) => state.users.isLoggedIn);
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (selectUserIsLoggedIn(state)) {
       history.push("/profile");
     }
-  }, [isLoggedIn, history]);
+  }, [state, history]);
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -49,7 +56,9 @@ const AuthForm = () => {
   };
   return (
     <section className={classes.auth}>
-      {isError && <Alert severity="error">{isError}</Alert>}
+      {selectUserIsError(state) && (
+        <Alert severity="error">{selectUserIsError(state)}</Alert>
+      )}
       <h1>{isLogin ? "Login" : "Sign Up"}</h1>
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
@@ -73,10 +82,10 @@ const AuthForm = () => {
           />
         </div>
         <div className={classes.actions}>
-          {!isLoading && (
+          {!selectUserIsLoading(state) && (
             <button>{isLogin ? "Login" : "Create Account"}</button>
           )}
-          {isLoading && <CircularProgress size={20} />}
+          {selectUserIsLoading(state) && <CircularProgress size={50} />}
           <button
             type="button"
             className={classes.toggle}
