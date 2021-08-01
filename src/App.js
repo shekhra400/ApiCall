@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import PrivateRoute from "./components/Common/Private/PrivateRoute";
 import PublicRoute from "./components/Common/Public/PublicRoute";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Redirect, Route, Switch } from "react-router";
 import "./App.css";
 import { toggleLoginIn } from "./actions/userAction";
@@ -14,6 +14,7 @@ import HomePage from "./containers/Pages/Home/Homepage";
 import ContactPage from "./components/Contacts/ContactPage";
 import LoginPage from "./containers/Pages/Login/LoginPage";
 import ProfilePage from "./containers/Pages/Profile/ProfilePage";
+import SignUpPage from "./containers/Login/SignUpPage";
 
 function App() {
   //const [users, setUsers] = useState([]);
@@ -40,7 +41,6 @@ function App() {
     if (authToken !== null) dispatch(toggleLoginIn(true));
     else dispatch(toggleLoginIn(false));
   }, [authToken, dispatch]);
-  const userIsLoggedIn = useSelector((state) => state.users.isLoggedIn);
 
   return (
     <React.Fragment>
@@ -49,18 +49,9 @@ function App() {
         <Switch>
           <PublicRoute exact path="/" component={HomePage} />
           <PublicRoute exact path="/contact" component={ContactPage} />
-          <PrivateRoute
-            exact
-            path="/login"
-            component={LoginPage}
-            isAuthenticated={!userIsLoggedIn}
-          />
-          <PrivateRoute
-            exact
-            path="/profile"
-            component={ProfilePage}
-            isAuthenticated={userIsLoggedIn}
-          />
+          <PublicRoute exact path="/signUp" component={SignUpPage} />
+          <PublicRoute exact path="/login" component={LoginPage} />
+          <PrivateRoute exact path="/profile" component={ProfilePage} />
           <Route path="*">
             <Redirect to="/" />
           </Route>

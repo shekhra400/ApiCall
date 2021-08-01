@@ -42,7 +42,7 @@ const userReducer = (state = initialState, action) => {
       updatedState = {
         ...state,
         isLoading: false,
-        error: action.payload,
+        error: action.payload.error,
       };
       break;
     case USER_LOGOUT_REQUEST:

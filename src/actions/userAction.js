@@ -60,7 +60,7 @@ export const authenticateUser = (email, pwd) => {
         password: pwd,
       })
       .then((res) => dispatch(authenticateUserSuccess(res)))
-      .catch((error) => dispatch(authenticateUserError(error)));
+      .catch((error) => dispatch(authenticateUserError(error.response.data)));
   };
 };
 

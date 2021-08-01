@@ -33,6 +33,11 @@ const Header = () => {
               <Link to="/login">Login</Link>
             </li>
           )}
+          {!userIsLoggedIn && (
+            <li>
+              <Link to="/signUp">SignUp</Link>
+            </li>
+          )}
           {userIsLoggedIn && (
             <li>
               <Link to="/profile">Profile</Link>
