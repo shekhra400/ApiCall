@@ -25,4 +25,7 @@ never call a container from a component
     * understand redux-form validations and apply validations on the fields
     * implement loader on submit click
     * use material ui alert messages for success and error messages.
+    
+### For User list Page
+    * Go through 
 
