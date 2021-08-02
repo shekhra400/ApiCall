@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { userLogout } from "../../actions/userAction";
+import { userLogout } from "../../redux/actions/userAction";
 import { Link } from "react-router-dom";
 import classes from "./Header.module.css";
 import { useHistory } from "react-router";
@@ -41,6 +41,11 @@ const Header = () => {
           {userIsLoggedIn && (
             <li>
               <Link to="/profile">Profile</Link>
+            </li>
+          )}
+          {userIsLoggedIn && (
+            <li>
+              <Link to="/userList">UserList</Link>
             </li>
           )}
           {userIsLoggedIn && (

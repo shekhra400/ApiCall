@@ -5,7 +5,7 @@ import PublicRoute from "./components/Common/Public/PublicRoute";
 import { useDispatch } from "react-redux";
 import { Redirect, Route, Switch } from "react-router";
 import "./App.css";
-import { toggleLoginIn } from "./actions/userAction";
+import { toggleLoginIn } from "./redux/actions/userAction";
 //import { useState } from 'react';
 //import UserList from './components/UserList';
 import Header from "./components/Header/Header";
@@ -15,6 +15,7 @@ import ContactPage from "./components/Contacts/ContactPage";
 import LoginPage from "./containers/Pages/Login/LoginPage";
 import ProfilePage from "./containers/Pages/Profile/ProfilePage";
 import SignUpPage from "./containers/Login/SignUpPage";
+import UserList from "./containers/Pages/UserList/UserListPage";
 
 function App() {
   //const [users, setUsers] = useState([]);
@@ -52,6 +53,7 @@ function App() {
           <PublicRoute exact path="/signUp" component={SignUpPage} />
           <PublicRoute exact path="/login" component={LoginPage} />
           <PrivateRoute exact path="/profile" component={ProfilePage} />
+          <PrivateRoute exact path="/userList" component={UserList} />
           <Route path="*">
             <Redirect to="/" />
           </Route>

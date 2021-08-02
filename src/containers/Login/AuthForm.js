@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import classes from "./AuthForm.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { authenticateUser } from "../../actions/userAction";
+import { authenticateUser } from "../../redux/actions/userAction";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useHistory } from "react-router-dom";
 import { Alert } from "@material-ui/lab";
@@ -9,7 +9,7 @@ import {
   selectUserIsLoggedIn,
   selectUserIsLoading,
   selectUserIsError,
-} from "../../store/selector";
+} from "../../redux/selectors/user.selector";
 
 const AuthForm = () => {
   //const error = useSelector((state) => state.login.error);

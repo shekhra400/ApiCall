@@ -9,7 +9,7 @@ export const selectUserIsLoggedIn = createSelector(
 
 export const selectUserIsLoading = createSelector(
   [selectUser],
-  (user) => user.IsLoading
+  (user) => user.isLoading
 );
 
 export const selectUserIsError = createSelector(

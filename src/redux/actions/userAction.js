@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { API_BASE_PATH } from "../utils/constants";
+import { API_BASE_PATH } from "../../utils/constants";
 export const LOAD_USERS = "LOAD_USERS";
 export const LOAD_ERROR = "LOAD_ERROR";
 export const USER_LOGIN_REQUEST = "USER_LOGIN_REQUEST";
@@ -55,7 +55,7 @@ export const authenticateUser = (email, pwd) => {
   return async (dispatch) => {
     dispatch(authenticateUserRequest());
     axios
-      .post(`${API_BASE_PATH}login?delay=5`, {
+      .post(`${API_BASE_PATH}login?delay=2`, {
         email: email,
         password: pwd,
       })
