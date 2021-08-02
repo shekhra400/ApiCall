@@ -35,4 +35,9 @@ never call a container from a component
     * once data is retrieved save in redux state with all the current information (new  entity in state)
         consumers: { list :[] ,page:2}
     * container me console.log(user list data).
+    ### Issues
+        Structure of state object should be same as that of initialvalue
+        incorrect query param
+        
+    
 
