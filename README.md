@@ -38,6 +38,10 @@ never call a container from a component
     ### Issues
         Structure of state object should be same as that of initialvalue
         incorrect query param
+    * implement table for consumer data display
+    * implement sorting
+    * implement pagination
+    * implement searching
         
     
 
