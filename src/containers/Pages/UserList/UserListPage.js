@@ -13,8 +13,9 @@ import classes from "./UserListPage.module.css";
 const UserList = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
+  const userListData = selectUserListData(state);
   useEffect(() => {
-    dispatch(loadUserList());
+    dispatch(loadUserList({ page: 4 }));
   }, [dispatch]);
   return (
     <div className={classes.main}>
@@ -23,7 +24,7 @@ const UserList = () => {
       {!selectUserListIsLoading(state) && selectUserListPageNo(state) && (
         <h3>Displayed Page No is : {selectUserListPageNo(state)}</h3>
       )}
-      {console.log(selectUserListData(state))}
+      {userListData.length > 0 && console.log(userListData)}
     </div>
   );
 };

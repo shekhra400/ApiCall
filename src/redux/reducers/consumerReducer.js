@@ -5,7 +5,9 @@ import {
 } from "../actions/consumerAction";
 
 const initialState = {
-  list: {},
+  listData: {
+    data: [],
+  },
   isLoading: false,
   error: null,
   page: 1,
@@ -24,15 +26,15 @@ const userReducer = (state = initialState, action) => {
       updatedState = {
         ...state,
         isLoading: false,
-        list: action.payload,
-        page: action.payload.data.page,
+        listData: action.payload,
+        page: action.payload.page,
       };
       break;
     case USER_LIST_FAILURE:
       updatedState = {
         ...state,
         isLoading: false,
-        error: action.payload.error,
+        error: action.payload,
       };
       break;
     default:
