@@ -1,21 +1,23 @@
-import React from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loadUserList } from "../../../redux/actions/consumerAction";
+import DisplayUserList from "./DisplayUserList";
+import classes from "./UserListPage.module.css";
+import { isEmpty } from "lodash";
 import {
   selectUserListData,
   selectUserListIsLoading,
   selectUserListPageNo,
 } from "../../../redux/selectors/consumer.selector";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import classes from "./UserListPage.module.css";
 
 const UserList = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const userListData = selectUserListData(state);
+
   useEffect(() => {
-    dispatch(loadUserList({ page: 4 }));
+    dispatch(loadUserList());
   }, [dispatch]);
   return (
     <div className={classes.main}>
@@ -24,7 +26,12 @@ const UserList = () => {
       {!selectUserListIsLoading(state) && selectUserListPageNo(state) && (
         <h3>Displayed Page No is : {selectUserListPageNo(state)}</h3>
       )}
-      {userListData.length > 0 && console.log(userListData)}
+      {!isEmpty(userListData) && (
+        <DisplayUserList
+          list={userListData}
+          pageNo={selectUserListPageNo(state)}
+        />
+      )}
     </div>
   );
 };

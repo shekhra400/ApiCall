@@ -26,7 +26,7 @@ const userReducer = (state = initialState, action) => {
       updatedState = {
         ...state,
         isLoading: false,
-        listData: action.payload,
+        listData: { ...action.payload },
         page: action.payload.page,
       };
       break;

@@ -11,10 +11,13 @@ export const USER_LIST_FAILURE = "USER_LIST_FAILURE";
 
 export const loadUserList = (payload) => {
   const payloadConsumerApi = { ...CONSUMER_LIST_DEFAULT_PAGE, ...payload };
+  const perPage = CONSUMER_LIST_DEFAULT_PAGE.per_page;
   return async (dispatch) => {
     dispatch(loadUserListRequest());
     axios
-      .get(`${API_BASE_PATH}users?page=${payloadConsumerApi.page}&delay=5`)
+      .get(
+        `${API_BASE_PATH}users?page=${payloadConsumerApi.page}&per_page=${perPage}&delay=3`
+      )
       .then((res) => dispatch(loadUserListSuccess(res)))
       .catch((error) => dispatch(loadUserListError(error)));
   };
