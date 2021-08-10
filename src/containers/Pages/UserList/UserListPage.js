@@ -26,12 +26,7 @@ const UserList = () => {
       {!selectUserListIsLoading(state) && selectUserListPageNo(state) && (
         <h3>Displayed Page No is : {selectUserListPageNo(state)}</h3>
       )}
-      {!isEmpty(userListData) && (
-        <DisplayUserList
-          list={userListData}
-          pageNo={selectUserListPageNo(state)}
-        />
-      )}
+      {!isEmpty(userListData) && <DisplayUserList list={userListData} />}
     </div>
   );
 };

@@ -8,7 +8,7 @@ import TableRow from "@material-ui/core/TableRow";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { isEmpty } from "lodash";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { TablePagination } from "@material-ui/core";
 import { CONSUMER_LIST_DEFAULT_PAGE } from "../../../utils/constants";
 import { loadUserList } from "../../../redux/actions/consumerAction";
@@ -16,8 +16,8 @@ import { useDispatch } from "react-redux";
 
 const DisplayUserList = (props) => {
   const rows = props.list.data;
-  const pageNo = props.list.page;
-  const [page, setPage] = useState(0);
+  //const pageNo = props.list.page;
+  const [page, setPage] = useState(null);
   const rowsPerPage = CONSUMER_LIST_DEFAULT_PAGE.per_page;
   const pages = [1, 2, 3];
   const totalCount = props.list.total;
@@ -33,9 +33,14 @@ const DisplayUserList = (props) => {
     },
   }))(TableCell);
 
+  useEffect(() => {
+    if (page !== null) {
+      dispatch(loadUserList({ page: page + 1 }));
+    }
+  }, [dispatch, page]);
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
-    dispatch(loadUserList({ page: pageNo + 1 }));
   };
 
   const ListAfterPagination = () => {
@@ -47,8 +52,8 @@ const DisplayUserList = (props) => {
       {isEmpty(rows) && <h1> No Users Found</h1>}
       {!isEmpty(rows) && (
         <div className={classes.table}>
-          <TableContainer component={Paper}>
-            <Table>
+          <TableContainer component={Paper} style={{ maxHeight: 390 }}>
+            <Table stickyHeader>
               <TableHead>
                 <TableRow>
                   <StyledTableCell>Id</StyledTableCell>
