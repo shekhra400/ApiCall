@@ -13,14 +13,20 @@ import { TablePagination } from "@material-ui/core";
 import { CONSUMER_LIST_DEFAULT_PAGE } from "../../../utils/constants";
 import { loadUserList } from "../../../redux/actions/consumerAction";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import UserDetailModal from "./ModalDetailPage";
+//import ModalPage from "../../../Modal/ModalPage";
 
 const DisplayUserList = (props) => {
-  const rows = props.list.data;
+  const { list: rows, total } = props;
   //const pageNo = props.list.page;
   const [page, setPage] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [currentUserId, setCurrentUserId] = useState(null);
   const rowsPerPage = CONSUMER_LIST_DEFAULT_PAGE.per_page;
   const pages = [1, 2, 3];
-  const totalCount = props.list.total;
+  const totalCount = total;
+
   const dispatch = useDispatch();
 
   const StyledTableCell = withStyles((theme) => ({
@@ -47,6 +53,15 @@ const DisplayUserList = (props) => {
     return rows;
   };
 
+  const handleOpen = (event, id) => {
+    setCurrentUserId(id);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   return (
     <React.Fragment>
       {isEmpty(rows) && <h1> No Users Found</h1>}
@@ -67,7 +82,11 @@ const DisplayUserList = (props) => {
                 {ListAfterPagination().map((row) => (
                   <TableRow key={row.id}>
                     <StyledTableCell component="th" scope="row">
-                      {row.id}
+                      <div>
+                        <Link onClick={(event) => handleOpen(event, row.id)}>
+                          {row.id + row.first_name}
+                        </Link>
+                      </div>
                     </StyledTableCell>
                     <StyledTableCell align="right">
                       {row.first_name}
@@ -95,6 +114,13 @@ const DisplayUserList = (props) => {
           >
             <button></button>
           </TablePagination>
+          {
+            <UserDetailModal
+              open={open}
+              currentId={currentUserId}
+              handleClose={handleClose}
+            />
+          }
         </div>
       )}
     </React.Fragment>

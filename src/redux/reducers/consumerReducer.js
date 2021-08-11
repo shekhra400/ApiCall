@@ -2,12 +2,16 @@ import {
   USER_LIST_REQUEST,
   USER_LIST_SUCCESS,
   USER_LIST_FAILURE,
+  USER_DETAIL_REQUEST,
+  USER_DETAIL_SUCCESS,
+  USER_DETAIL_FAILURE,
 } from "../actions/consumerAction";
 
 const initialState = {
   listData: {
     data: [],
   },
+  detailData: { id: 1, email: "abc@xyz.com" },
   isLoading: false,
   error: null,
   page: 1,
@@ -31,6 +35,26 @@ const userReducer = (state = initialState, action) => {
       };
       break;
     case USER_LIST_FAILURE:
+      updatedState = {
+        ...state,
+        isLoading: false,
+        error: action.payload,
+      };
+      break;
+    case USER_DETAIL_REQUEST:
+      updatedState = {
+        ...state,
+        isLoading: true,
+      };
+      break;
+    case USER_DETAIL_SUCCESS:
+      updatedState = {
+        ...state,
+        isLoading: false,
+        detailData: { ...action.payload.data },
+      };
+      break;
+    case USER_DETAIL_FAILURE:
       updatedState = {
         ...state,
         isLoading: false,

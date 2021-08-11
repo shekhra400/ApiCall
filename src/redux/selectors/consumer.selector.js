@@ -7,6 +7,11 @@ export const selectUserListData = createSelector(
   (data) => data.listData.data
 );
 
+export const selectUserListTotal = createSelector(
+  [selectConsumers],
+  (data) => data.listData.total
+);
+
 export const selectUserListIsLoading = createSelector(
   [selectConsumers],
   (userList) => userList.isLoading
@@ -15,4 +20,9 @@ export const selectUserListIsLoading = createSelector(
 export const selectUserListPageNo = createSelector(
   [selectConsumers],
   (listPageNo) => listPageNo.listData.data.page
+);
+
+export const selectUserData = createSelector(
+  [selectConsumers],
+  (data) => data.detailData
 );

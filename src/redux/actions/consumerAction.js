@@ -8,6 +8,9 @@ import {
 export const USER_LIST_REQUEST = "USER_LIST_REQUEST";
 export const USER_LIST_SUCCESS = "USER_LIST_SUCCESS";
 export const USER_LIST_FAILURE = "USER_LIST_FAILURE";
+export const USER_DETAIL_REQUEST = "USER_DETAIL_REQUEST";
+export const USER_DETAIL_SUCCESS = "USER_DETAIL_SUCCESS";
+export const USER_DETAIL_FAILURE = "USER_DETAIL_FAILURE";
 
 export const loadUserList = (payload) => {
   const payloadConsumerApi = { ...CONSUMER_LIST_DEFAULT_PAGE, ...payload };
@@ -16,10 +19,21 @@ export const loadUserList = (payload) => {
     dispatch(loadUserListRequest());
     axios
       .get(
-        `${API_BASE_PATH}users?page=${payloadConsumerApi.page}&per_page=${perPage}&delay=3`
+        `${API_BASE_PATH}users?page=${payloadConsumerApi.page}&per_page=${perPage}&delay=1`
       )
-      .then((res) => dispatch(loadUserListSuccess(res)))
+      .then((res) => dispatch(loadUserListSuccess(res.data)))
       .catch((error) => dispatch(loadUserListError(error)));
+  };
+};
+
+export const LoadUserDetail = (payload) => {
+  const { id } = payload;
+  return async (dispatch) => {
+    dispatch(detailUserRequest());
+    axios
+      .get(`${API_BASE_PATH}users/${id}`)
+      .then((res) => dispatch(detailUserSuccess(res.data)))
+      .catch((error) => dispatch(detailUserError(error.response.data)));
   };
 };
 
@@ -34,4 +48,18 @@ const loadUserListSuccess = (payload) => ({
 
 const loadUserListError = (payload) => ({
   type: USER_LIST_FAILURE,
+});
+
+const detailUserRequest = () => ({
+  type: USER_DETAIL_REQUEST,
+});
+
+const detailUserSuccess = (payload) => ({
+  type: USER_DETAIL_SUCCESS,
+  payload,
+});
+
+const detailUserError = (payload) => ({
+  type: USER_DETAIL_FAILURE,
+  payload,
 });

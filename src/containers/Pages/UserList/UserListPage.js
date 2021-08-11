@@ -6,6 +6,7 @@ import classes from "./UserListPage.module.css";
 import { isEmpty } from "lodash";
 import {
   selectUserListData,
+  selectUserListTotal,
   selectUserListIsLoading,
   selectUserListPageNo,
 } from "../../../redux/selectors/consumer.selector";
@@ -15,6 +16,8 @@ const UserList = () => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const userListData = selectUserListData(state);
+  const total = selectUserListTotal(state);
+  //use material ui grid to create seperate column
 
   useEffect(() => {
     dispatch(loadUserList());
@@ -26,7 +29,9 @@ const UserList = () => {
       {!selectUserListIsLoading(state) && selectUserListPageNo(state) && (
         <h3>Displayed Page No is : {selectUserListPageNo(state)}</h3>
       )}
-      {!isEmpty(userListData) && <DisplayUserList list={userListData} />}
+      {!isEmpty(userListData) && (
+        <DisplayUserList list={userListData} total={total} />
+      )}
     </div>
   );
 };
