@@ -11,7 +11,7 @@ const initialState = {
   listData: {
     data: [],
   },
-  detailData: { id: 1, email: "abc@xyz.com" },
+  detailData: {},
   isLoading: false,
   error: null,
   page: 1,

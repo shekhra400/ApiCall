@@ -31,7 +31,7 @@ export const LoadUserDetail = (payload) => {
   return async (dispatch) => {
     dispatch(detailUserRequest());
     axios
-      .get(`${API_BASE_PATH}users/${id}`)
+      .get(`${API_BASE_PATH}users/${id}?delay=2`)
       .then((res) => dispatch(detailUserSuccess(res.data)))
       .catch((error) => dispatch(detailUserError(error.response.data)));
   };

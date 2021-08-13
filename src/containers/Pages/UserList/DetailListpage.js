@@ -1,9 +1,19 @@
-import { ButtonBase, Grid, makeStyles, Typography } from "@material-ui/core";
+import {
+  ButtonBase,
+  CircularProgress,
+  Grid,
+  makeStyles,
+  Typography,
+} from "@material-ui/core";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LoadUserDetail } from "../../../redux/actions/consumerAction";
-import { selectUserData } from "../../../redux/selectors/consumer.selector";
+import {
+  selectUserData,
+  selectUserListIsLoading,
+} from "../../../redux/selectors/consumer.selector";
 import { IconButton } from "@material-ui/core";
+import { isEmpty } from "lodash";
 
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -11,20 +21,18 @@ const DetailListPage = (props) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const details = selectUserData(state);
+  const loading = selectUserListIsLoading(state);
   const useStyles = makeStyles((theme) => ({
-    modal: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-    },
     paper: {
       backgroundColor: theme.palette.background.paper,
       border: "2px solid #000",
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
+      minWidth: "400px",
+      minHeight: "200px",
     },
     image: {
-      width: 128,
+      width: 208,
       height: 128,
     },
     img: {
@@ -32,6 +40,10 @@ const DetailListPage = (props) => {
       display: "block",
       maxWidth: "100%",
       maxHeight: "100%",
+    },
+
+    loader: {
+      margin: "auto",
     },
   }));
 
@@ -44,10 +56,18 @@ const DetailListPage = (props) => {
   return (
     <div>
       <div className={classe.paper}>
-        <IconButton onClick={props.handleClose} style={{ right: -350 }}>
-          <CloseIcon style={{ position: "absolute", top: 0, right: 10 }} />
-        </IconButton>
-        {!props.loading && (
+        {loading && (
+          <div style={{ textAlign: "center", marginTop: "20px" }}>
+            <CircularProgress size={50} className={classe.loader} />
+            <h2>Loading Data...</h2>
+          </div>
+        )}
+        {!loading && (
+          <IconButton onClick={props.handleClose} style={{ right: -380 }}>
+            <CloseIcon style={{ position: "absolute", top: 0, right: 1 }} />
+          </IconButton>
+        )}
+        {!loading && !isEmpty(details) && (
           <Grid container spacing={2}>
             <Grid item>
               <ButtonBase className={classe.image}>

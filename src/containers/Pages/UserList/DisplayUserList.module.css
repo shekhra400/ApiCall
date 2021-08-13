@@ -17,3 +17,11 @@
 .pagination {
   float: right;
 }
+
+.textdiv {
+  width: 80%;
+  color: darkmagenta;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}

@@ -9,12 +9,15 @@ import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
-import { TablePagination } from "@material-ui/core";
+import { IconButton, TablePagination } from "@material-ui/core";
 import { CONSUMER_LIST_DEFAULT_PAGE } from "../../../utils/constants";
 import { loadUserList } from "../../../redux/actions/consumerAction";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import UserDetailModal from "./ModalDetailPage";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import SearchIcon from "@material-ui/icons/Search";
+import { TextField } from "@material-ui/core";
 //import ModalPage from "../../../Modal/ModalPage";
 
 const DisplayUserList = (props) => {
@@ -22,6 +25,11 @@ const DisplayUserList = (props) => {
   //const pageNo = props.list.page;
   const [page, setPage] = useState(null);
   const [open, setOpen] = useState(false);
+  const [filterFn, setFilterFn] = useState({
+    fn: (items) => {
+      return items;
+    },
+  });
   const [currentUserId, setCurrentUserId] = useState(null);
   const rowsPerPage = CONSUMER_LIST_DEFAULT_PAGE.per_page;
   const pages = [1, 2, 3];
@@ -37,6 +45,7 @@ const DisplayUserList = (props) => {
     body: {
       fontSize: 14,
     },
+    textfield: {},
   }))(TableCell);
 
   useEffect(() => {
@@ -49,8 +58,8 @@ const DisplayUserList = (props) => {
     setPage(newPage);
   };
 
-  const ListAfterPagination = () => {
-    return rows;
+  const ListAfterPaginationAndFilter = () => {
+    return filterFn.fn(rows);
   };
 
   const handleOpen = (event, id) => {
@@ -62,9 +71,34 @@ const DisplayUserList = (props) => {
     setOpen(false);
   };
 
+  const handleSearch = (e) => {
+    const target = e.target;
+    debugger;
+    setFilterFn({
+      fn: (items) => {
+        if (target.value === "") return items;
+        else
+          return items.filter(
+            (item) =>
+              item.first_name.toLowerCase().includes(target.value) ||
+              item.last_name.toLowerCase().includes(target.value) ||
+              item.email.toLowerCase().includes(target.value)
+          );
+      },
+    });
+  };
+
   return (
     <React.Fragment>
       {isEmpty(rows) && <h1> No Users Found</h1>}
+      <div className={classes.textdiv}>
+        <InputAdornment position="start">
+          <TextField label="Search User" onChange={handleSearch} />
+          <IconButton>
+            <SearchIcon />
+          </IconButton>
+        </InputAdornment>
+      </div>
       {!isEmpty(rows) && (
         <div className={classes.table}>
           <TableContainer component={Paper} style={{ maxHeight: 390 }}>
@@ -79,7 +113,7 @@ const DisplayUserList = (props) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {ListAfterPagination().map((row) => (
+                {ListAfterPaginationAndFilter().map((row) => (
                   <TableRow key={row.id}>
                     <StyledTableCell component="th" scope="row">
                       <div>
