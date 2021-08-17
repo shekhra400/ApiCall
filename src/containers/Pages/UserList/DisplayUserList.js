@@ -9,22 +9,28 @@ import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
-import { IconButton, TablePagination } from "@material-ui/core";
+import { IconButton, TablePagination, TableSortLabel } from "@material-ui/core";
 import { CONSUMER_LIST_DEFAULT_PAGE } from "../../../utils/constants";
 import { loadUserList } from "../../../redux/actions/consumerAction";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import UserDetailModal from "./ModalDetailPage";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
 import { TextField } from "@material-ui/core";
+import { selectUserListIsLoading } from "../../../redux/selectors/consumer.selector";
 //import ModalPage from "../../../Modal/ModalPage";
 
 const DisplayUserList = (props) => {
+  const state = useSelector((state) => state);
+  const loading = selectUserListIsLoading(state);
+
   const { list: rows, total } = props;
   //const pageNo = props.list.page;
   const [page, setPage] = useState(null);
   const [open, setOpen] = useState(false);
+  const [order, setOrder] = useState();
+  const [orderBy, setOrderBy] = useState();
   const [filterFn, setFilterFn] = useState({
     fn: (items) => {
       return items;
@@ -55,11 +61,40 @@ const DisplayUserList = (props) => {
   }, [dispatch, page]);
 
   const handleChangePage = (event, newPage) => {
+    debugger;
     setPage(newPage);
   };
 
+  const stableSort = (array, comparator) => {
+    const stabilizedThis = array.map((el, index) => [el, index]);
+    stabilizedThis.sort((a, b) => {
+      const order = comparator(a[0], b[0]);
+      if (order !== 0) return order;
+      return a[1] - b[1];
+    });
+    return stabilizedThis.map((el) => el[0]);
+  };
+
+  const getComparator = (order, orderBy) => {
+    return order === "desc"
+      ? (a, b) => descendingComparator(a, b, orderBy)
+      : (a, b) => -descendingComparator(a, b, orderBy);
+  };
+
+  const descendingComparator = (a, b, orderBy) => {
+    if (b[orderBy] < a[orderBy]) {
+      return -1;
+    }
+
+    if (b[orderBy] > a[orderBy]) {
+      return 1;
+    }
+    return 0;
+  };
+
   const ListAfterPaginationAndFilter = () => {
-    return filterFn.fn(rows);
+    const sortedRecords = stableSort(rows, getComparator(order, orderBy));
+    return filterFn.fn(sortedRecords);
   };
 
   const handleOpen = (event, id) => {
@@ -88,9 +123,22 @@ const DisplayUserList = (props) => {
     });
   };
 
+  const headCells = [
+    { id: "id", label: "Id" },
+    { id: "firstName", label: "FirstName" },
+    { id: "lastName", label: "LastName" },
+    { id: "email", label: "Email" },
+  ];
+
+  const handleSortRequest = (cellId) => {
+    debugger;
+    const isAsc = orderBy === cellId && order === "asc";
+    setOrder(isAsc ? "desc" : "asc");
+    setOrderBy(cellId);
+  };
   return (
     <React.Fragment>
-      {isEmpty(rows) && <h1> No Users Found</h1>}
+      {isEmpty(rows) && !loading && <h1> No Users Found</h1>}
       <div className={classes.textdiv}>
         <InputAdornment position="start">
           <TextField label="Search User" onChange={handleSearch} />
@@ -105,10 +153,20 @@ const DisplayUserList = (props) => {
             <Table stickyHeader>
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>Id</StyledTableCell>
-                  <StyledTableCell align="right">FirstName</StyledTableCell>
-                  <StyledTableCell align="right">LastName</StyledTableCell>
-                  <StyledTableCell align="right">Email</StyledTableCell>
+                  {headCells.map((headcell) => (
+                    <StyledTableCell
+                      style={{ align: headcell.id !== "Id" ? "right" : "left" }}
+                    >
+                      <TableSortLabel
+                        direction={orderBy === headcell.id ? order : "asc"}
+                        onClick={() => {
+                          handleSortRequest(headcell.id);
+                        }}
+                      >
+                        {headcell.label}
+                      </TableSortLabel>
+                    </StyledTableCell>
+                  ))}
                   <StyledTableCell align="right">Avatar</StyledTableCell>
                 </TableRow>
               </TableHead>
@@ -141,7 +199,7 @@ const DisplayUserList = (props) => {
             component="div"
             rowsPerPageOptions={pages}
             rowsPerPage={rowsPerPage}
-            page={page}
+            page={+page}
             count={totalCount}
             onChangePage={handleChangePage}
             // onChangeRowsPerPage={rowsPerPage}

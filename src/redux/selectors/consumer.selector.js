@@ -17,6 +17,11 @@ export const selectUserListIsLoading = createSelector(
   (userList) => userList.isLoading
 );
 
+export const selectUserDetailIsLoading = createSelector(
+  [selectConsumers],
+  (userList) => userList.detailIsLoading
+);
+
 export const selectUserListPageNo = createSelector(
   [selectConsumers],
   (listPageNo) => listPageNo.listData.data.page

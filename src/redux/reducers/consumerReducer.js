@@ -12,7 +12,8 @@ const initialState = {
     data: [],
   },
   detailData: {},
-  isLoading: false,
+  userIsLoading: false,
+  detailIsLoading: false,
   error: null,
   page: 1,
 };
@@ -44,20 +45,20 @@ const userReducer = (state = initialState, action) => {
     case USER_DETAIL_REQUEST:
       updatedState = {
         ...state,
-        isLoading: true,
+        detailIsLoading: true,
       };
       break;
     case USER_DETAIL_SUCCESS:
       updatedState = {
         ...state,
-        isLoading: false,
+        detailIsLoading: false,
         detailData: { ...action.payload.data },
       };
       break;
     case USER_DETAIL_FAILURE:
       updatedState = {
         ...state,
-        isLoading: false,
+        detailIsLoading: false,
         error: action.payload,
       };
       break;

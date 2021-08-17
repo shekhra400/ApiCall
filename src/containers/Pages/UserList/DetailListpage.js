@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { LoadUserDetail } from "../../../redux/actions/consumerAction";
 import {
   selectUserData,
-  selectUserListIsLoading,
+  selectUserDetailIsLoading,
 } from "../../../redux/selectors/consumer.selector";
 import { IconButton } from "@material-ui/core";
 import { isEmpty } from "lodash";
@@ -21,7 +21,7 @@ const DetailListPage = (props) => {
   const dispatch = useDispatch();
   const state = useSelector((state) => state);
   const details = selectUserData(state);
-  const loading = selectUserListIsLoading(state);
+  const loading = selectUserDetailIsLoading(state);
   const useStyles = makeStyles((theme) => ({
     paper: {
       backgroundColor: theme.palette.background.paper,
