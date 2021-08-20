@@ -5,6 +5,7 @@ import {
   USER_DETAIL_REQUEST,
   USER_DETAIL_SUCCESS,
   USER_DETAIL_FAILURE,
+  USER_DETAIL_RESET,
 } from "../actions/consumerAction";
 
 const initialState = {
@@ -24,13 +25,13 @@ const userReducer = (state = initialState, action) => {
     case USER_LIST_REQUEST:
       updatedState = {
         ...state,
-        isLoading: true,
+        userIsLoading: true,
       };
       break;
     case USER_LIST_SUCCESS:
       updatedState = {
         ...state,
-        isLoading: false,
+        userIsLoading: false,
         listData: { ...action.payload },
         page: action.payload.page,
       };
@@ -38,7 +39,7 @@ const userReducer = (state = initialState, action) => {
     case USER_LIST_FAILURE:
       updatedState = {
         ...state,
-        isLoading: false,
+        userIsLoading: false,
         error: action.payload,
       };
       break;
@@ -60,6 +61,13 @@ const userReducer = (state = initialState, action) => {
         ...state,
         detailIsLoading: false,
         error: action.payload,
+      };
+      break;
+    case USER_DETAIL_RESET:
+      updatedState = {
+        ...state,
+        detailIsLoading: true,
+        detailData: {},
       };
       break;
     default:

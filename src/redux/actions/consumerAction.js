@@ -11,6 +11,7 @@ export const USER_LIST_FAILURE = "USER_LIST_FAILURE";
 export const USER_DETAIL_REQUEST = "USER_DETAIL_REQUEST";
 export const USER_DETAIL_SUCCESS = "USER_DETAIL_SUCCESS";
 export const USER_DETAIL_FAILURE = "USER_DETAIL_FAILURE";
+export const USER_DETAIL_RESET = "USER_DETAIL_RESET";
 
 export const loadUserList = (payload) => {
   const payloadConsumerApi = { ...CONSUMER_LIST_DEFAULT_PAGE, ...payload };
@@ -36,6 +37,10 @@ export const LoadUserDetail = (payload) => {
       .catch((error) => dispatch(detailUserError(error.response.data)));
   };
 };
+
+export const resetDetailState = () => ({
+  type: USER_DETAIL_RESET,
+});
 
 const loadUserListRequest = () => ({
   type: USER_LIST_REQUEST,

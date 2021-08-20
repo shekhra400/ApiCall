@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { userLogout } from "../../redux/actions/userAction";
+//import { userLogout } from "../../redux/actions/userAction";
+import { userLogout } from "../../redux/actions/userAction_toolkit";
 import { Link } from "react-router-dom";
 import classes from "./Header.module.css";
 import { useHistory } from "react-router";

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import classes from "./AuthForm.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { authenticateUser } from "../../redux/actions/userAction";
+//import { authenticateUser } from "../../redux/actions/userAction";
+import { authenticateUser } from "../../redux/actions/userAction_toolkit";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useHistory } from "react-router-dom";
 import { Alert } from "@material-ui/lab";

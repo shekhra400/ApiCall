@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loadUserList } from "../../../redux/actions/consumerAction";
+import { loadUserList } from "../../../redux/actions/consumerAction_toolkit";
 import DisplayUserList from "./DisplayUserList";
 import classes from "./UserListPage.module.css";
 import { isEmpty } from "lodash";

@@ -5,7 +5,7 @@ import PublicRoute from "./components/Common/Public/PublicRoute";
 import { useDispatch } from "react-redux";
 import { Redirect, Route, Switch } from "react-router";
 import "./App.css";
-import { toggleLoginIn } from "./redux/actions/userAction";
+import { toggleLoginIn } from "./redux/actions/userAction_toolkit";
 //import { useState } from 'react';
 //import UserList from './components/UserList';
 import Header from "./components/Header/Header";
@@ -18,24 +18,6 @@ import SignUpPage from "./containers/Login/SignUpPage";
 import UserList from "./containers/Pages/UserList/UserListPage";
 
 function App() {
-  //const [users, setUsers] = useState([]);
-  // const loadUserList = async() => {
-
-  //   const response = await fetch('https://loadusers-default-rtdb.firebaseio.com/user.json');
-  //   const responseData = await response.json();
-
-  //   const loadedUsers = [];
-
-  //   for ( const key in responseData){
-
-  //     loadedUsers.push({
-  //       id: key,
-  //       name : responseData[key].name
-  //     })
-  //   }
-
-  //       setUsers(loadedUsers);
-  // }
   const dispatch = useDispatch();
   const authToken = localStorage.getItem("token");
   useEffect(() => {

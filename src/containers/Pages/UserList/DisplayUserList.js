@@ -11,7 +11,7 @@ import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
 import { IconButton, TablePagination, TableSortLabel } from "@material-ui/core";
 import { CONSUMER_LIST_DEFAULT_PAGE } from "../../../utils/constants";
-import { loadUserList } from "../../../redux/actions/consumerAction";
+import { loadUserList } from "../../../redux/actions/consumerAction_toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import UserDetailModal from "./ModalDetailPage";
@@ -19,6 +19,7 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
 import { TextField } from "@material-ui/core";
 import { selectUserListIsLoading } from "../../../redux/selectors/consumer.selector";
+import { stableSort, getComparator } from "../../../utils/common";
 //import ModalPage from "../../../Modal/ModalPage";
 
 const DisplayUserList = (props) => {
@@ -26,11 +27,10 @@ const DisplayUserList = (props) => {
   const loading = selectUserListIsLoading(state);
 
   const { list: rows, total } = props;
-  //const pageNo = props.list.page;
   const [page, setPage] = useState(null);
   const [open, setOpen] = useState(false);
-  const [order, setOrder] = useState();
-  const [orderBy, setOrderBy] = useState();
+  const [order, setOrder] = useState("asc");
+  const [orderBy, setOrderBy] = useState("id");
   const [filterFn, setFilterFn] = useState({
     fn: (items) => {
       return items;
@@ -65,33 +65,6 @@ const DisplayUserList = (props) => {
     setPage(newPage);
   };
 
-  const stableSort = (array, comparator) => {
-    const stabilizedThis = array.map((el, index) => [el, index]);
-    stabilizedThis.sort((a, b) => {
-      const order = comparator(a[0], b[0]);
-      if (order !== 0) return order;
-      return a[1] - b[1];
-    });
-    return stabilizedThis.map((el) => el[0]);
-  };
-
-  const getComparator = (order, orderBy) => {
-    return order === "desc"
-      ? (a, b) => descendingComparator(a, b, orderBy)
-      : (a, b) => -descendingComparator(a, b, orderBy);
-  };
-
-  const descendingComparator = (a, b, orderBy) => {
-    if (b[orderBy] < a[orderBy]) {
-      return -1;
-    }
-
-    if (b[orderBy] > a[orderBy]) {
-      return 1;
-    }
-    return 0;
-  };
-
   const ListAfterPaginationAndFilter = () => {
     const sortedRecords = stableSort(rows, getComparator(order, orderBy));
     return filterFn.fn(sortedRecords);
@@ -101,7 +74,6 @@ const DisplayUserList = (props) => {
     setCurrentUserId(id);
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
@@ -125,8 +97,8 @@ const DisplayUserList = (props) => {
 
   const headCells = [
     { id: "id", label: "Id" },
-    { id: "firstName", label: "FirstName" },
-    { id: "lastName", label: "LastName" },
+    { id: "first_name", label: "FirstName" },
+    { id: "last_name", label: "LastName" },
     { id: "email", label: "Email" },
   ];
 
@@ -154,10 +126,12 @@ const DisplayUserList = (props) => {
               <TableHead>
                 <TableRow>
                   {headCells.map((headcell) => (
-                    <StyledTableCell
-                      style={{ align: headcell.id !== "Id" ? "right" : "left" }}
+                    <TableCell
+                      sortDirection={orderBy === headcell.id}
+                      align="center"
                     >
                       <TableSortLabel
+                        active={orderBy === headcell.id}
                         direction={orderBy === headcell.id ? order : "asc"}
                         onClick={() => {
                           handleSortRequest(headcell.id);
@@ -165,9 +139,9 @@ const DisplayUserList = (props) => {
                       >
                         {headcell.label}
                       </TableSortLabel>
-                    </StyledTableCell>
+                    </TableCell>
                   ))}
-                  <StyledTableCell align="right">Avatar</StyledTableCell>
+                  <TableCell align="center">Avatar</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -180,14 +154,16 @@ const DisplayUserList = (props) => {
                         </Link>
                       </div>
                     </StyledTableCell>
-                    <StyledTableCell align="right">
+                    <StyledTableCell align="center">
                       {row.first_name}
                     </StyledTableCell>
-                    <StyledTableCell align="right">
+                    <StyledTableCell align="center">
                       {row.last_name}
                     </StyledTableCell>
-                    <StyledTableCell align="right">{row.email}</StyledTableCell>
-                    <StyledTableCell align="right">
+                    <StyledTableCell align="center">
+                      {row.email}
+                    </StyledTableCell>
+                    <StyledTableCell align="center">
                       <img src={row.avatar} alt={row.first_name}></img>
                     </StyledTableCell>
                   </TableRow>

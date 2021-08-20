@@ -7,7 +7,10 @@ import {
 } from "@material-ui/core";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LoadUserDetail } from "../../../redux/actions/consumerAction";
+import {
+  LoadUserDetail,
+  resetDetailState,
+} from "../../../redux/actions/consumerAction_toolkit";
 import {
   selectUserData,
   selectUserDetailIsLoading,
@@ -47,8 +50,16 @@ const DetailListPage = (props) => {
     },
   }));
 
+  useEffect(() => {
+    return () => {
+      dispatch(resetDetailState());
+    };
+  }, [dispatch]);
+
   const classe = useStyles();
   const { id } = props;
+
+  // cleaning up state on modal close.
   useEffect(() => {
     dispatch(LoadUserDetail({ id }));
   }, [dispatch, id]);
