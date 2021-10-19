@@ -1,0 +1,51 @@
+.main {
+  margin: 5rem auto;
+  width: 60%;
+  max-width: 35rem;
+  border-radius: 6px;
+  background-color: rgb(203, 195, 227);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  text-align: center;
+}
+
+.control {
+  display: flex;
+  flex-direction: column;
+  /*width: 35rem;*/
+}
+
+.btn {
+  cursor: pointer;
+  font: inherit;
+  color: white;
+  background-color: #9f5ccc;
+  border: 1px solid #9f5ccc;
+  border-radius: 4px;
+  margin-top: 2rem;
+  padding: 0.5rem 2.5rem;
+  width: 10rem;
+}
+
+.modal {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  background-color: white;
+  padding: 1rem;
+  text-align: center;
+  width: 30rem;
+  z-index: 10;
+  position: fixed;
+  top: 30vh;
+  left: calc(50% - 15rem);
+}
+
+.backdrop {
+  position: fixed;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.75);
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+}

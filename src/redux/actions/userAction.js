@@ -10,7 +10,7 @@ export const USER_LOGOUT_REQUEST = "USER_LOGOUT_REQUEST";
 export const USER_LOGIN_TOGGLE = "USER_LOGIN_TOGGLE";
 
 export const loadUsers = () => {
-  return async (dispatch) => {
+  return async dispatch => {
     // const loadUserList = async() => {
     //dispatch(addUserStarted(true))
 
@@ -30,18 +30,18 @@ export const loadUsers = () => {
 
     axios
       .get(`https://jsonplaceholder.typicode.com/users`)
-      .then((res) => {
+      .then(res => {
         const loadedUsers = [];
 
         for (const key in res.data) {
           loadedUsers.push({
             id: key,
-            name: res.data[key].name,
+            name: res.data[key].name
           });
         }
         dispatch(addUserSuccess(loadedUsers));
       })
-      .catch((err) => {
+      .catch(err => {
         dispatch(addUserFailure(err.message));
       });
   };
@@ -52,61 +52,61 @@ export const loadUsers = () => {
 //login
 
 export const authenticateUser = (email, pwd) => {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch(authenticateUserRequest());
     axios
       .post(`${API_BASE_PATH}login?delay=2`, {
         email: email,
-        password: pwd,
+        password: pwd
       })
-      .then((res) => dispatch(authenticateUserSuccess(res)))
-      .catch((error) => dispatch(authenticateUserError(error.response.data)));
+      .then(res => dispatch(authenticateUserSuccess(res)))
+      .catch(error => dispatch(authenticateUserError(error.response.data)));
   };
 };
 
 //logout
 
 export const userLogout = () => {
-  return async (dispatch) => {
+  return async dispatch => {
     dispatch(userLogoutRequest());
   };
 };
 
-export const toggleLoginIn = (value) => {
-  return async (dispatch) => {
+export const toggleLoginIn = value => {
+  return async dispatch => {
     dispatch(userToggleLogin(value));
   };
 };
 
-const userLogoutRequest = () => ({
-  type: USER_LOGOUT_REQUEST,
+export const userLogoutRequest = () => ({
+  type: USER_LOGOUT_REQUEST
 });
 
-const userToggleLogin = (payload) => ({
+export const userToggleLogin = payload => ({
   type: USER_LOGIN_TOGGLE,
-  payload,
+  payload
 });
 
-const authenticateUserRequest = () => ({
-  type: USER_LOGIN_REQUEST,
+export const authenticateUserRequest = () => ({
+  type: USER_LOGIN_REQUEST
 });
 
-const authenticateUserSuccess = (payload) => ({
+export const authenticateUserSuccess = payload => ({
   type: USER_LOGIN_SUCCESS,
-  payload,
+  payload
 });
 
-const authenticateUserError = (payload) => ({
+export const authenticateUserError = payload => ({
   type: USER_LOGIN_FAILURE,
-  payload,
+  payload
 });
 
-const addUserSuccess = (payload) => ({
+export const addUserSuccess = payload => ({
   type: LOAD_USERS,
-  payload,
+  payload
 });
 
-const addUserFailure = (payload) => ({
+export const addUserFailure = payload => ({
   type: LOAD_ERROR,
-  payload,
+  payload
 });

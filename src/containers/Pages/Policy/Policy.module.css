@@ -1,0 +1,25 @@
+.main {
+  width: 100%;
+  height: 2rem;
+  background-color: #936dac;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  align-items: center;
+  text-align: center;
+}
+
+.actions {
+  cursor: pointer;
+  font: inherit;
+  color: black;
+  background-color: #9f5ccc;
+  border: 1px solid #9f5ccc;
+  border-radius: 4px;
+  padding: 0.5rem 2.5rem;
+}
+
+.cardDisplay {
+  margin-top: 5rem;
+  text-align: left;
+  margin-left: 5rem;
+  max-width: 20rem;
+}

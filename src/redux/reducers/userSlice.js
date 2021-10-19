@@ -5,7 +5,7 @@ const initialState = {
   isLoading: false,
   error: null,
   token: "",
-  isLoggedIn: false,
+  isLoggedIn: false
 };
 
 export const userSlice = createSlice({
@@ -39,10 +39,11 @@ export const userSlice = createSlice({
     userLogoutRequest(state) {
       state.isLoading = false;
       state.isLoggedIn = false;
+      localStorage.removeItem("token");
     },
     userToggleLogin(state, action) {
       state.isLoggedIn = action.payload;
-    },
-  },
+    }
+  }
 });
 export const userActions = userSlice.actions;
