@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import classes from "./AuthForm.module.css";
 import { useDispatch, useSelector } from "react-redux";
-//import { authenticateUser } from "../../redux/actions/userAction";
-import { authenticateUser } from "../../redux/actions/userAction_toolkit";
+import { authenticateUser } from "../../redux/actions/userAction";
+//import { authenticateUser } from "../../redux/actions/userAction_toolkit";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import { useHistory } from "react-router-dom";
 import { Alert } from "@material-ui/lab";
 import {
   selectUserIsLoggedIn,
   selectUserIsLoading,
-  selectUserIsError,
+  selectUserIsError
 } from "../../redux/selectors/user.selector";
 
 const AuthForm = () => {
@@ -17,13 +17,13 @@ const AuthForm = () => {
   //const authToken = useSelector((state) => state.login.token);
   const dispatch = useDispatch();
   const history = useHistory();
-  const [enteredEmail, setEnteredEmail] = useState();
+  const [enteredEmail, setEnteredEmail] = useState("eve.holt@reqres.in");
   const [enteredPassword, setEnteredPassword] = useState();
   //const enteredEmailRef = useRef();
   //const enteredPasswordRef = useRef();
   const [isLogin, setIsLogin] = useState(true);
 
-  const state = useSelector((state) => state);
+  const state = useSelector(state => state);
   // const {
   //   error: isError,
   //   isLoading,
@@ -31,25 +31,29 @@ const AuthForm = () => {
   // } = useSelector((state) => state.users);
   //const  = useSelector((state) => state.users.isLoggedIn);
 
-  useEffect(() => {
-    if (selectUserIsLoggedIn(state)) {
-      history.push("/profile");
-    }
-  }, [state, history]);
+  useEffect(
+    () => {
+      //debugger;
+      if (selectUserIsLoggedIn(state)) {
+        history.push("/profile");
+      }
+    },
+    [state, history]
+  );
 
   const switchAuthModeHandler = () => {
-    setIsLogin((prevState) => !prevState);
+    setIsLogin(prevState => !prevState);
   };
 
-  const emailInputHandler = (event) => {
+  const emailInputHandler = event => {
     setEnteredEmail(event.target.value);
   };
 
-  const passwordInputHandler = (event) => {
+  const passwordInputHandler = event => {
     setEnteredPassword(event.target.value);
   };
 
-  const submitHandler = (event) => {
+  const submitHandler = event => {
     event.preventDefault();
     //const enteredEmail = enteredEmailRef.current.value;
     //const enteredPassword = enteredPasswordRef.current.value;

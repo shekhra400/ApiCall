@@ -5,7 +5,7 @@ import {
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILURE,
   USER_LOGOUT_REQUEST,
-  USER_LOGIN_TOGGLE,
+  USER_LOGIN_TOGGLE
 } from "../actions/userAction";
 
 const initialState = {
@@ -13,7 +13,7 @@ const initialState = {
   isLoading: false,
   error: null,
   token: "",
-  isLoggedIn: false,
+  isLoggedIn: false
 };
 
 const userReducer = (state = initialState, action) => {
@@ -22,7 +22,7 @@ const userReducer = (state = initialState, action) => {
     case USER_LOGIN_REQUEST:
       updatedState = {
         ...state,
-        isLoading: true,
+        isLoading: true
       };
       break;
     case USER_LOGIN_SUCCESS:
@@ -31,7 +31,7 @@ const userReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         token: authToken,
-        isLoggedIn: !!authToken,
+        isLoggedIn: !!authToken
       };
       if (authToken.length > 0) {
         localStorage.setItem("token", authToken);
@@ -42,14 +42,14 @@ const userReducer = (state = initialState, action) => {
       updatedState = {
         ...state,
         isLoading: false,
-        error: action.payload.error,
+        error: action.payload.error
       };
       break;
     case USER_LOGOUT_REQUEST:
       updatedState = {
         ...state,
         isLoading: false,
-        isLoggedIn: false,
+        isLoggedIn: false
       };
       localStorage.removeItem("token");
       break;
@@ -57,20 +57,20 @@ const userReducer = (state = initialState, action) => {
       updatedState = {
         ...state,
         isLoading: false,
-        list: [...action.payload],
+        list: [...action.payload]
       };
       break;
     case USER_LOGIN_TOGGLE:
       updatedState = {
         ...state,
-        isLoggedIn: action.payload,
+        isLoggedIn: action.payload
       };
       break;
     case LOAD_ERROR:
       updatedState = {
         ...state,
         isLoading: false,
-        error: action.payload,
+        error: action.payload
       };
       break;
     default:

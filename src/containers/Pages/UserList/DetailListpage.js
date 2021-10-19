@@ -3,66 +3,76 @@ import {
   CircularProgress,
   Grid,
   makeStyles,
-  Typography,
+  Typography
 } from "@material-ui/core";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+// import {
+//   LoadUserDetail,
+//   resetDetailState,
+// } from "../../../redux/actions/consumerAction_toolkit";
 import {
   LoadUserDetail,
-  resetDetailState,
-} from "../../../redux/actions/consumerAction_toolkit";
+  resetDetailState
+} from "../../../redux/actions/consumerAction";
 import {
   selectUserData,
-  selectUserDetailIsLoading,
+  selectUserDetailIsLoading
 } from "../../../redux/selectors/consumer.selector";
 import { IconButton } from "@material-ui/core";
 import { isEmpty } from "lodash";
 
 import CloseIcon from "@material-ui/icons/Close";
 
-const DetailListPage = (props) => {
+const DetailListPage = props => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state);
+  const state = useSelector(state => state);
   const details = selectUserData(state);
   const loading = selectUserDetailIsLoading(state);
-  const useStyles = makeStyles((theme) => ({
+  const useStyles = makeStyles(theme => ({
     paper: {
       backgroundColor: theme.palette.background.paper,
       border: "2px solid #000",
       boxShadow: theme.shadows[5],
       padding: theme.spacing(2, 4, 3),
       minWidth: "400px",
-      minHeight: "200px",
+      minHeight: "200px"
     },
     image: {
       width: 208,
-      height: 128,
+      height: 128
     },
     img: {
       margin: "auto",
       display: "block",
       maxWidth: "100%",
-      maxHeight: "100%",
+      maxHeight: "100%"
     },
 
     loader: {
-      margin: "auto",
-    },
+      margin: "auto"
+    }
   }));
 
-  useEffect(() => {
-    return () => {
-      dispatch(resetDetailState());
-    };
-  }, [dispatch]);
+  useEffect(
+    () => {
+      return () => {
+        dispatch(resetDetailState());
+      };
+    },
+    [dispatch]
+  );
 
   const classe = useStyles();
   const { id } = props;
 
   // cleaning up state on modal close.
-  useEffect(() => {
-    dispatch(LoadUserDetail({ id }));
-  }, [dispatch, id]);
+  useEffect(
+    () => {
+      dispatch(LoadUserDetail({ id }));
+    },
+    [dispatch, id]
+  );
 
   return (
     <div>
@@ -78,7 +88,8 @@ const DetailListPage = (props) => {
             <CloseIcon style={{ position: "absolute", top: 0, right: 1 }} />
           </IconButton>
         )}
-        {!loading && !isEmpty(details) && (
+        {!loading &&
+        !isEmpty(details) && (
           <Grid container spacing={2}>
             <Grid item>
               <ButtonBase className={classe.image}>
